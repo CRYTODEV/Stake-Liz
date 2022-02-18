@@ -19,7 +19,7 @@ var tokenPrice = 0;
 var web3BaseUrl_main;
 var web3_main;
 var otherStakingContract;
-var otherPRXContract;
+var otherLIZContract;
 
 var isMobile = false;
 
@@ -29,7 +29,7 @@ let chainData;
 let allowance;
 
 var duration;
-var avlPRXBalance;
+var avlLIZBalance;
 var est_apy = 40;
 var est_apr = 10;
 var userDepositAmount;
@@ -192,11 +192,11 @@ async function fetchAccountData() {
   jQuery(".connect-wallet").attr("data-toggle", "modal");
   jQuery(".connect-wallet").attr("data-target", "#disconnectModal");
 
-  var showAvlPRXBalance = await otherPRXContract.methods.balanceOf(selectedAccount).call();
-  var tmp_avlPRXBalance = parseFloat(web3_main.utils.fromWei(showAvlPRXBalance, 'ether')).toFixed(0);
-  avlPRXBalance = tmp_avlPRXBalance;
+  var showAvlLIZBalance = await otherLIZContract.methods.balanceOf(selectedAccount).call();
+  var tmp_avlLIZBalance = parseFloat(web3_main.utils.fromWei(showAvlLIZBalance, 'nano')).toFixed(0);
+  avlLIZBalance = tmp_avlLIZBalance;
 
-  jQuery("#avlPRXAmount").html(tmp_avlPRXBalance);
+  jQuery("#avlLIZAmount").html(tmp_avlLIZBalance);
 
   // check allowance
   checkAllowance();
@@ -216,21 +216,21 @@ async function fetchAccountData() {
 
   stakingContract = new web3.eth.Contract(stakingAbi, stakingContractAddress);
 
-  prxContract = new web3.eth.Contract(bep20Abi, prx);
+  lizContract = new web3.eth.Contract(bep20Abi, liz);
   
 }
 
 async function getUserData() {
 
   var userInfo = await otherStakingContract.methods.userInfo(selectedAccount).call();
-  var lockedAmount = parseFloat(web3_main.utils.fromWei(userInfo.amount, "ether"));
+  var lockedAmount = parseFloat(web3_main.utils.fromWei(userInfo.amount, "nano"));
   userDepositAmount = userInfo.amount;
-  jQuery("#lockedBalance").html(lockedAmount);
-  jQuery("#calcLockedBalance").html(lockedAmount * tokenPrice);
+  jQuery("#lockedBalance").html(numberWithSpaces(lockedAmount));
+  jQuery("#calcLockedBalance").html(numberWithSpaces(lockedAmount * tokenPrice));
 
 
   var claimAmount = await otherStakingContract.methods.pendingToken(selectedAccount).call();
-  var tmp_calcUSDT = parseFloat(parseFloat(web3_main.utils.fromWei(claimAmount, "ether")) * tokenPrice).toFixed(7);
+  var tmp_calcUSDT = parseFloat(parseFloat(web3_main.utils.fromWei(claimAmount, "nano")) * tokenPrice).toFixed(7);
   jQuery("#claimBalance").html(tmp_calcUSDT);
   jQuery("#calcClaimBalance").html(tmp_calcUSDT);
 
@@ -321,18 +321,18 @@ async function changeNetwork() {
 
 function selectMax() {
   
-  if(avlPRXBalance == 0) {
+  if(avlLIZBalance == 0) {
     $(".error-msg").html("Insufficient balance");
     $(".error-msg").show();
     Swal.fire({
       icon: 'error',
-      title: 'Insufficient PRX Balance',
-      text: 'Please buy the PRX on the Binance Smart Chain',
-      footer: '<a href="https://swap.prxcoin.io" target="_blank">Buy PRX</a>'
+      title: 'Insufficient LIZ Balance',
+      text: 'Please buy the LIZ on the Binance Smart Chain',
+      footer: '<a href="https://swap.lizcoin.io" target="_blank">Buy LIZ</a>'
     })
     return; 
   }
-  $(".input-amount").val(avlPRXBalance);
+  $(".input-amount").val(avlLIZBalance);
   
   // validInput();
 }
@@ -349,14 +349,14 @@ function validInput() {
     }
 
     $(".input-amount").removeClass("invalidInput");
-    if(avlPRXBalance == 0) {
+    if(avlLIZBalance == 0) {
       $(".error-msg").html("Insufficient balance");
       $(".error-msg").show();
       $("#est_interest").html("0.000");
       return false; 
     }
 
-    if($(".input-amount").val() != "" && (parseInt($(".input-amount").val()) > parseInt(avlPRXBalance) || $(".input-amount").val() <= 0)) {
+    if($(".input-amount").val() != "" && (parseInt($(".input-amount").val()) > parseInt(avlLIZBalance) || $(".input-amount").val() <= 0)) {
       $(".error-msg").html("Invalid amount");
       $(".error-msg").show();
       $("#est_interest").html("0.000");
@@ -416,8 +416,8 @@ async function checkAllowance() {
 
 async function getAllowanceAmount() {
 
-  // approve PRX token
-  allowance = await otherPRXContract.methods.allowance(selectedAccount, stakingContractAddress).call();
+  // approve LIZ token
+  allowance = await otherLIZContract.methods.allowance(selectedAccount, stakingContractAddress).call();
   var allowanceAmount = new BigNumber(allowance).toNumber();
 
   return allowanceAmount;
@@ -490,21 +490,21 @@ async function init(){
     web3_main = new Web3(new Web3.providers.HttpProvider(web3BaseUrl_main));
 
     otherStakingContract = new web3_main.eth.Contract(stakingAbi, stakingContractAddress);
-    otherPRXContract = new web3_main.eth.Contract(bep20Abi, prx);
+    otherLIZContract = new web3_main.eth.Contract(bep20Abi, liz);
 
-    getPRXInfo();
+    getLIZInfo();
 
-    var showPRXInfo =  setInterval(function () {
-        getPRXInfo();
-    }, 60000);
+    var showLIZInfo =  setInterval(function () {
+        getLIZInfo();
+    }, 10000);
 }
 
 
-async function getPRXInfo() {
-  var tmp_totalLockedAmount = await otherPRXContract.methods.balanceOf(stakingContractAddress).call();
-  var totalLockedAmount = parseFloat(web3_main.utils.fromWei(tmp_totalLockedAmount, "ether"));
+async function getLIZInfo() {
+  var tmp_totalLockedAmount = await otherStakingContract.methods.totalDepositAmount().call();
+  var totalLockedAmount = parseFloat(web3_main.utils.fromWei(tmp_totalLockedAmount, "nano"));
 
-  // prx price
+  // liz price
   var BNTokenPrice = await otherStakingContract.methods.tokenPrice().call();
 
   var tmp_tokenPrice = parseFloat(web3_main.utils.fromWei(BNTokenPrice, 'ether'));
@@ -513,8 +513,14 @@ async function getPRXInfo() {
 
   $(".showTokenPrice").html(tokenPrice);
 
-  $("#totalLockedBalance").html(totalLockedAmount);
+  $("#totalLockedBalance").html(numberWithSpaces(totalLockedAmount));
 
+}
+
+function numberWithSpaces(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return parts.join(".");
 }
 
 function calcDate() {
@@ -569,7 +575,7 @@ async function deposit() {
       return;
    }
    var value = $(".input-amount").val();
-   var amount = web3_main.utils.toWei(value, "ether");
+   var amount = web3_main.utils.toWei(value, "nano");
 
    jQuery("#btn-confirm").addClass("disabled");
    jQuery("#btn-confirm").html("Processing...");
@@ -587,13 +593,19 @@ async function deposit() {
       try {
         console.log(tx);
         result = await web3.eth.sendTransaction(tx);
+
+        console.log(result.logs);
+
+        var amount = result.logs[0].data;
+
+        var amount_int = parseFloat(web3_main.utils.fromWei(amount, "ether"));
         if(result.status) {
            jQuery("#btn-confirm").removeClass("disabled");
            jQuery("#btn-confirm").html("Confirm");
            Swal.fire({
              icon: 'success',
              title: 'Success',
-             text: 'Deposited Successfully Amount: ' + value + "PRX"
+             text: 'Deposited Successfully Amount: ' + value + "LIZ"
            })
            fetchAccountData();
            return;
@@ -640,16 +652,16 @@ async function approve() {
    try{
       var approve;
 
-      var data = prxContract.methods.approve(stakingContractAddress, maxUint256).encodeABI();
+      var data = lizContract.methods.approve(stakingContractAddress, maxUint256).encodeABI();
       var gasPrice = await web3_main.eth.getGasPrice();
       const tx = {
         from: selectedAccount,
-        to: prx,
+        to: liz,
         gasPrice: gasPrice,
         data: data,
       };
 
-      // approve = await prxContract.methods.approve(stakingContractAddress, maxUint256).send({from: selectedAccount});
+      // approve = await lizContract.methods.approve(stakingContractAddress, maxUint256).send({from: selectedAccount});
 
       console.log(tx);
       approve = await web3.eth.sendTransaction(tx);

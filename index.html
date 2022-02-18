@@ -5,21 +5,21 @@
   <link rel="shortcut icon" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
   <!-- Meta -->
-  <title>PRXCOIN - Staking</title>
+  <title>LIZ - Staking</title>
   <meta
     name="description"
-    content="PRX Finance"
+    content="LIZ Finance"
   />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
   <meta name="theme-color" content="#1FC7D4" />
-  <meta name="twitter:image" content="https://swap.prxcoin.io/" />
+  <meta name="twitter:image" content="https://staking.lizarian.in/" />
   <meta
     name="twitter:description"
-    content="This is PRX Finance. Let's swap PRX token!"
+    content="This is Lizard Token Staking platform. Let's stake LIZ token and earn the BUSD!"
   />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PRX Finance run on Binance Smart Chain (BSC)" />
+  <meta name="twitter:title" content="Lizard Token staking run on Binance Smart Chain (BSC)" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.15.4/css/pro.min.css" />
@@ -46,13 +46,13 @@
       </button>
       <div class="collapse navbar-collapse" id="main_nav">
         <ul class="navbar-nav">
-          <li class="nav-item"> <a class="nav-link " href="https://prxcoin.io" target="_blank"><i class="fas fa-home"></i> <span class="nav-separete">Home</span> </a> </li>
-          <li class="nav-item "> <a class="nav-link " href="https://swap.prxcoin.io" target="_blank"><i class="fas fa-coins"></i> <span class="nav-separete">Buy</span> </a> </li>
-          <li class="nav-item active"> <a class="nav-link " href="https://staking.prxcoin.io"><i class="fas fa-hand-holding-usd"></i> <span class="nav-separete">Staking</span> </a> </li>
-          <li class="nav-item "><a class="nav-link borber-none" onclick="window.open('https://prxcoin.io/PRX-WHITEPAPER.pdf', '_newtab')"> <i class="fas fa-scroll"></i> <span>White Paper</span> </a></li>
+          <li class="nav-item"> <a class="nav-link " href="https://lizarian.in" target="_blank"><i class="fas fa-home"></i> <span class="nav-separete">Home</span> </a> </li>
+          <li class="nav-item "> <a class="nav-link " href="https://pancakeswap.finance/swap?outputCurrency=0x496f4b10a8b2557ee30f1b7c06bfc7227a56c4f2" target="_blank"><i class="fas fa-coins"></i> <span class="nav-separete">Buy</span> </a> </li>
+          <li class="nav-item active"> <a class="nav-link " href="#"><i class="fas fa-hand-holding-usd"></i> <span class="nav-separete">Staking</span> </a> </li>
+          <li class="nav-item "><a class="nav-link borber-none" onclick="window.open('https://lizarian.in/LIZ-WHITEPAPER.pdf', '_newtab')"> <i class="fas fa-scroll"></i> <span>White Paper</span> </a></li>
         </ul>
       </div>
-      <a class="logo-image" href="https://prxcoin.io"></a>
+      <a class="logo-image" href="https://lizarian.in"></a>
       <div class="div-connect">
         <button class="button connect-wallet description" onclick="connectWallet()"><i class="fas fa-wallet pr-1"></i>Connect Wallet</button>
       </div>
@@ -63,11 +63,11 @@
       <div class="div-claim">
         <div class="container">
           <div class="flex justify-content-center flex-wrap">
-            <p class="claim-title col-sm-6 col-md-12 col-lg-7 text-left bold"><span class="basic-color">PRX</span> Staking, dedicated to increasing user staking income <span class="success-color">$USDT</span></p>
+            <p class="claim-title col-sm-6 col-md-12 col-lg-7 text-left bold"><span class="basic-color">LIZ</span> Staking, dedicated to increasing user staking income <span class="success-color">$USDT</span></p>
             <div class="col-sm-3 col-md-12 col-lg-5 div-claim-balance flex justify-content-center flex-wrap">
               <div class="p-2 mx-auto col-sm-12 col-md-6 col-lg-6">
                 <div class="white text-left mb-2"><span class="summary-label mb-2">Locked Staking balance</span></div>
-                <div class="white text-left mb-2 bold"><span id="lockedBalance">-</span> PRX</div>
+                <div class="white text-left mb-2 bold"><span id="lockedBalance">-</span> $LIZ</div>
                 <div class="white text-left mb-2 dollar-font">≈ $<span id="calcLockedBalance">-</span></div>
                 <button id="btn-withdraw" type="button" class="btn btn-warning w-100 text-center bold mb-2" onclick="withdraw()">Withdraw</button>
                 <div class="white text-left mb-2 status hide"><span class="summary-label mb-2">Status: </span><span class="withdraw_status">Available</span></div>
@@ -75,7 +75,7 @@
               </div>
               <div class="p-2 mx-auto col-sm-12 col-md-6 col-lg-6">
                 <div class="white text-left mb-2"><span class="summary-label mb-2">Your Claimable Profit</span></div>
-                <div class="white text-left mb-2 bold profit-font"><span id="claimBalance">-</span> USDT</div>
+                <div class="white text-left mb-2 bold profit-font"><span id="claimBalance">-</span> $USDT</div>
                 <div class="white text-left mb-2 profit-dollar-font dollar-font">≈ $<span id="calcClaimBalance">-</span></div>
                 <button id="btn-claim" type="button" class="btn btn-warning w-100 text-center bold mb-2"  onclick="claim()">Claim</button>
                 <div class="white text-left mb-2 status hide"><span class="summary-label mb-2">Status: </span><span class="claim_status">Unavailable</span></div>
@@ -87,7 +87,7 @@
       </div>
       <div id="subMenu">
         <div class="container flex justify-content-center my-2">
-          <p class="white text-center stake-caption">Total Value Locked<br><span id="totalLockedBalance">---</span> <span class="prx-label">PRX</span>  </p>
+          <p class="white text-center stake-caption">Total Value Stacked<br><span id="totalLockedBalance">---</span> <span class="prx-label">LIZ</span>  </p>
           <!-- <div class="mouse_scroll">
               <div>
                 <span class="m_scroll_arrows unu"></span>
@@ -105,13 +105,13 @@
                     <div class="staking-header flex">
                       <div class="left-content col-lg-6 col-md-6 col-sm-6 p-0">
                         <div class="staking-header-title">
-                          <h2 color="text" class="font-staking-title  pl-3"> <img class="img-coins" id="img-selected-coin" src="images/coins/PRX.png" alt="usth"/> Staking</h2>
+                          <h2 color="text" class="font-staking-title  pl-3"> <span class="normal-color">Lizard Token</span> - LP</h2>
                         </div>
                         <div class="staking-content">
                           <div class="staking-label">
-                            PRX Price
+                            LIZ Price
                           </div>
-                          <div id="tokenPrice"><span class="unavailable">PRX-USDT</span>&nbsp;&nbsp;<span class="lastPrice bold white">---</span>&nbsp;&nbsp;<span class="lastPercentage white">---</span></div>
+                          <div id="tokenPrice"><span class="unavailable">LIZ-BUSD</span>&nbsp;&nbsp;<span class="lastPrice bold white">$0.0015</span></div>
                           <div class="staking-label">
                             Profit Description
                           </div>
@@ -166,7 +166,7 @@
                             Lock Amount
                           </div>
                           <div class="input-lock-amount">
-                            <span data-bn-type="text" class="available-amount">Balance: <span id="avlPRXAmount">0.000</span> PRX</span>
+                            <span data-bn-type="text" class="available-amount">Balance: <span id="avlLIZAmount">0.000</span> LIZ</span>
                             <div class="input-group mb-3">
                               <input type="number" class="form-control input-amount" placeholder="Please enter the amount" aria-label="Please enter the amount" aria-describedby="basic-addon2" onkeyup="validInput()">
                               <div class="input-group-append">
@@ -180,10 +180,10 @@
                           </div>
                           <div class="flex">
                             <div class="scope-amount mr-1">
-                              <span class="label-scope">Minimum:</span> 3000 PRX
+                              <span class="label-scope">Minimum:</span> 3000 LIZ
                             </div>
                             <div class="scope-amount">
-                              <span class="label-scope">Max:</span> 100000000 PRX
+                              <span class="label-scope">Max:</span> 100000000 LIZ
                             </div>
                           </div>
                         </div>
@@ -275,17 +275,22 @@
               </div>
           </div>
       </div> 
-    </div>
-    <div class="pp-footer mt-4">
+      <div class="pp-footer mt-4">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-md-6 text-muted mt-md-0 mt-3 text-md-start text-center">Copyright © 2022 | PRXCOIN.IO</div>
-          <div class="col-md-6">
-            <a class="white text-decoration-none d-flex align-items-center justify-content-center" onclick="window.open('https://t.me/prxcommunitygroup', '_newtab')">
-              <i class="fab fa-telegram-plane mr-1"></i><span>PRX Community</span>
+          <div class="col-md-4 text-muted text-md-start text-center mt-2">Copyright © 2022 | Lizarian.in</div>
+          <div class="col-md-4 flex justify-content-center mt-2">
+            <a class="white text-decoration-none d-flex align-items-center justify-content-center"
+              href="mailto:OFFICIAL@LIZARIAN.IN"><i class="fas fa-envelope mr-1"></i><span>Customer Support</span>
             </a>
           </div>
-          <<!-- div class="col-md-4 text-center text-muted">Version 1.0.0</div>
+          <div class="col-md-4 flex justify-content-center mt-2">
+            <a class="white text-decoration-none d-flex align-items-center justify-content-center" onclick="window.open('https://t.me/lizarianofficial', '_newtab')">
+              <i class="fab fa-telegram-plane mr-1"></i><span>LIZ Community</span>
+            </a>
+          </div>
+          
+          <!-- div class="col-md-4 text-center text-muted">Version 1.0.0</div>
           <div class="col-md-4">
             <a class="white text-decoration-none d-flex align-items-center justify-content-md-end justify-content-center" onclick="window.open('https://t.me/prxcoinofficial', '_newtab')">
               <i class="fab fa-telegram-plane mr-1"></i><span>Community</span>
@@ -294,6 +299,8 @@
         </div>
       </div>
     </div>
+    </div>
+    
     </div>
   </section>
 </body>
@@ -348,41 +355,6 @@ crossorigin="anonymous"></script>
 <script src="main.js"></script>
 <script src="common.js"></script>
 <script type="text/javascript" src="bignumber.js"></script>
-
-<script>
-
-var url = "https://staking.prxcoin.io/ticker";
-jQuery(document).ready(function(){
-  var priceInterval = setInterval(function () {
-      getPRXTokenPrice();
-    }, 2000);
-});
-
-
-function getPRXTokenPrice() {
-  fetch(url)
-      .then(response => response.json())
-      .then(data => {
-
-         var lastPrice = data[0].last;
-         var lastPercentage = data[0].percentageChange;
-
-         if(parseInt(lastPercentage) > 0) {
-            $(".lastPercentage").addClass("high");
-            $(".lastPercentage").removeClass("low");
-            
-         } else {
-            $(".lastPercentage").removeClass("high");
-            $(".lastPercentage").addClass("low");
-            
-         }
-
-         $(".lastPrice").html(lastPrice);
-         $(".lastPercentage").html(lastPercentage.toFixed(2) + "%");
-      }
- );
-}
-</script>
 
 </html>
 
